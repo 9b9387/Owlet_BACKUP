@@ -1,0 +1,14 @@
+{
+    "name": "Undefined.Owletkit.Editor.Tests",
+    "references": [
+        "Undefined.Owletkit.Editor",
+        "Undefined.Owletkit"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}
