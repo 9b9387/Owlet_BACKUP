@@ -1,0 +1,10 @@
+{
+    "name": "Undefined.Owletkit.Editor",
+    "references": [
+      "Undefined.Owletkit"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}

@@ -1,0 +1,11 @@
+{
+    "name": "Undefined.Owletkit.Tests",
+    "references": [
+        "Undefined.Owletkit"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

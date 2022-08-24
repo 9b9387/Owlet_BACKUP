@@ -58,3 +58,8 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+.vsconfig
+OwletDev/Library
+OwletDev/Logs
+OwletDev/Temp
+OwletDev/UserSettings
