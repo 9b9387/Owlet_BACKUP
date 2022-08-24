@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.owletgame.owletkit": {
-      "version": "file:com.undefined.owletkit",
+      "version": "file:com.owlet.owletkit",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}

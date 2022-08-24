@@ -4,7 +4,7 @@
 //
 // -----------------------------------------------------------------------------
 
-namespace Undefined.Owletkit.Editor
+namespace Owletkit.Editor
 {
     /// <summary>
     /// Provide a general description of the public class.
