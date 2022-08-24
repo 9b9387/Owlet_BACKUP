@@ -4,7 +4,7 @@
 //
 // -----------------------------------------------------------------------------
 
-namespace Undefined.Owletkit
+namespace Owletkit
 {
     /// <summary>
     /// Provide a general description of the public class.
