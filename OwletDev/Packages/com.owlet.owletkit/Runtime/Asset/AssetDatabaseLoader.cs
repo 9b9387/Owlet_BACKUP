@@ -4,22 +4,25 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-public class AssetDatabaseLoader : IAssetLoader
+namespace Owlet.Asset
 {
-    private readonly string assetRootFolder;
-
-    public AssetDatabaseLoader(string rootPath)
+    public class AssetDatabaseLoader : IAssetLoader
     {
-        assetRootFolder = rootPath;
-    }
+        private readonly string assetRootFolder;
 
-    public T Load<T>(string assetPath) where T : Object
-    {
+        public AssetDatabaseLoader(string rootPath)
+        {
+            assetRootFolder = rootPath;
+        }
+
+        public T Load<T>(string assetPath) where T : Object
+        {
 #if UNITY_EDITOR
-        var path = Path.Combine(assetRootFolder, assetPath);
-        return AssetDatabase.LoadAssetAtPath<T>(path);
+            var path = Path.Combine(assetRootFolder, assetPath);
+            return AssetDatabase.LoadAssetAtPath<T>(path);
 #else
         return null;
 #endif
+        }
     }
 }

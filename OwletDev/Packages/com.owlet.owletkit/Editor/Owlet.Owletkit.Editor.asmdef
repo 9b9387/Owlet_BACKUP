@@ -1,8 +1,8 @@
 {
-    "name": "Owlet.Owletkit.Editor",
+    "name": "Owletkit.Editor",
     "rootNamespace": "",
     "references": [
-        "Undefined.Owletkit"
+        "Owletkit"
     ],
     "includePlatforms": [
         "Editor"

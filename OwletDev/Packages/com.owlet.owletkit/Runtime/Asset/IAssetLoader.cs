@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface IAssetLoader
+namespace Owlet.Asset
 {
-    public T Load<T>(string assetPath) where T : Object;
+    public interface IAssetLoader
+    {
+        public T Load<T>(string assetPath) where T : Object;
+    }
 }

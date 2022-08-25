@@ -1,8 +1,11 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AssetConfig", menuName = "Owlet/AssetConfigSO")]
-public class AssetConfigSO : ScriptableObject
+namespace Owlet.Asset
 {
-    public string assetRootPath;
-    public AssetLoadType loadType;
+    [CreateAssetMenu(fileName = "AssetConfig", menuName = "Owlet/AssetConfigSO")]
+    public class AssetConfigSO : ScriptableObject
+    {
+        public string assetRootPath;
+        public AssetLoadType loadType;
+    }
 }
