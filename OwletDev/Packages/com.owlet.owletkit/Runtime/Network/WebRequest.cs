@@ -1,0 +1,53 @@
+﻿// WebRequest.cs
+// Author: shihongyang shihongyang@weile.com
+// Data: 10/14/2022
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Networking;
+
+public static class WebRequest
+{
+    private static IWebRequest impl;
+
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    /// <typeparam name="T">IWebRequest的实现类型</typeparam>
+    public static void Init<T>() where T : MonoBehaviour, IWebRequest
+    {
+        T webRequestImpl = UnityEngine.Object.FindObjectOfType<T>();
+        if(webRequestImpl == null)
+        {
+            var obj = new GameObject("WebRequest");
+            webRequestImpl = obj.AddComponent<T>();
+        }
+        UnityEngine.Object.DontDestroyOnLoad(webRequestImpl.gameObject);
+
+        impl = webRequestImpl;
+    }
+
+    public static void Get(string url, Dictionary<string, string> headers,
+        Action<UnityWebRequest> action, int timeout = 5)
+    {
+        if(impl == null)
+        {
+            Debug.LogWarning("WebRequest has not been initialized");
+            return;
+        }
+
+        impl.Get(url, headers, action, timeout);
+    }
+
+    public static void Download(string url, string filePath,
+        Action<UnityWebRequest> action)
+    {
+        if (impl == null)
+        {
+            Debug.LogWarning("WebRequest has not been initialized");
+            return;
+        }
+
+        impl.Download(url, filePath, action);
+    }
+}
