@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{AB3627EC-150A-E614-3EB9-3832D6CB7E08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Owletkit", "Owletkit.csproj", "{C5520CC8-294C-6C6D-1999-A66AC3545607}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Owletkit.Editor", "Owletkit.Editor.csproj", "{72D86E13-EC2B-C013-7395-3AEDB5907AB4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB3627EC-150A-E614-3EB9-3832D6CB7E08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB3627EC-150A-E614-3EB9-3832D6CB7E08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB3627EC-150A-E614-3EB9-3832D6CB7E08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB3627EC-150A-E614-3EB9-3832D6CB7E08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5520CC8-294C-6C6D-1999-A66AC3545607}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5520CC8-294C-6C6D-1999-A66AC3545607}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5520CC8-294C-6C6D-1999-A66AC3545607}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5520CC8-294C-6C6D-1999-A66AC3545607}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72D86E13-EC2B-C013-7395-3AEDB5907AB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72D86E13-EC2B-C013-7395-3AEDB5907AB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72D86E13-EC2B-C013-7395-3AEDB5907AB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72D86E13-EC2B-C013-7395-3AEDB5907AB4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

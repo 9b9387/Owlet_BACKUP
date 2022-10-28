@@ -1,0 +1,16 @@
+{
+    "name": "Owletkit",
+    "rootNamespace": "",
+    "references": [
+        "GUID:2b28de3a6c6604fa8b51a1e49680d2ad"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
