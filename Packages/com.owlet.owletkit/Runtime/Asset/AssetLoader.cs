@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Owlet.Asset
+namespace Owlet
 {
     public static class AssetLoader
     {
@@ -44,7 +44,9 @@ namespace Owlet.Asset
                 return null;
             }
 
-            return Object.Instantiate(prefab);
+            var obj = Object.Instantiate(prefab);
+            obj.name = obj.name.Replace("(Clone)", "");
+            return obj;
         }
     }
 

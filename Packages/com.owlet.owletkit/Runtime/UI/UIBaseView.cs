@@ -1,73 +1,82 @@
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
-public abstract class UIBaseView : MonoBehaviour
+namespace Owlet
 {
-    private Dictionary<string, GameObject> children;
-    private Dictionary<string, MethodInfo> buttonEvents; 
-
-    private void Start()
+    public abstract class UIBaseView : MonoBehaviour
     {
-        OnLoad();
-    }
+        private Dictionary<string, GameObject> children;
+        private Dictionary<string, MethodInfo> buttonEvents;
 
-    public GameObject FindGameObject(string name)
-    {
-        if(children.ContainsKey(name))
+        private void Start()
         {
-            return children[name];
+            BindUI();
+            OnLoad();
         }
 
-        return null;
-    }
-
-    public T FindComponent<T>(string name) where T : Component
-    {
-        var go = FindGameObject(name);
-        if(go == null)
+        public GameObject FindGameObject(string name)
         {
+            if (children.ContainsKey(name))
+            {
+                return children[name];
+            }
+
             return null;
         }
-        return go.GetComponent<T>();
-    }
 
-
-    public void BindUI()
-    {
-        if(children != null)
+        public T FindComponent<T>(string name) where T : Component
         {
-            Debug.LogWarning($"{gameObject.name} has Binded.");
-            return;
-        }
-
-        // Cache game objects
-        children = new Dictionary<string, GameObject>();
-        var transforms = transform.GetComponentsInChildren<Transform>(true);
-
-        for (int i = 0; i < transforms.Length; i++)
-        {
-            var obj = transforms[i].gameObject;
-            if (children.ContainsKey(obj.name))
+            var go = FindGameObject(name);
+            if (go == null)
             {
-                Debug.LogWarning($"{obj.name} duplication.");
+                return null;
             }
-            children[obj.name] = obj;
+            return go.GetComponent<T>();
         }
 
-        // Bind Button Events
-        var buttons = gameObject.GetComponentsInChildren<Button>(true);
-        buttonEvents = new Dictionary<string, MethodInfo>();
-        for (int i = 0; i < buttons.Length; i++)
+        private void BindUI()
         {
-            var button = buttons[i];
-            button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(delegate ()
+            if (children != null)
+            {
+                Debug.LogWarning($"{gameObject.name} has Binded.");
+                return;
+            }
+
+            // Cache game objects
+            children = new Dictionary<string, GameObject>();
+            var transforms = transform.GetComponentsInChildren<Transform>(true);
+
+            for (int i = 0; i < transforms.Length; i++)
+            {
+                var obj = transforms[i].gameObject;
+                if (children.ContainsKey(obj.name))
+                {
+                    Debug.LogWarning($"UI GameObject name({obj.name}) duplication.");
+                }
+                children[obj.name] = obj;
+            }
+
+            // Bind Button Events
+            var buttons = gameObject.GetComponentsInChildren<Button>(true);
+            buttonEvents = new Dictionary<string, MethodInfo>();
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                var button = buttons[i];
+                var methodName = $"OnClick_{button.name}";
+
+                button.onClick.RemoveAllListeners();
+                button.onClick.AddListener(ReflectButtonClickEvent(methodName));
+            }
+        }
+
+        private UnityAction ReflectButtonClickEvent(string methodName)
+        {
+            return delegate ()
             {
                 MethodInfo method;
-                var methodName = $"OnClick_{button.name}";
 
                 if (buttonEvents.ContainsKey(methodName))
                 {
@@ -80,30 +89,30 @@ public abstract class UIBaseView : MonoBehaviour
                 }
 
                 method?.Invoke(this, null);
-            });
+            };
         }
-    }
 
-    private void OnDestroy()
-    {
-        OnUnload();
+        private void OnDestroy()
+        {
+            OnUnload();
 
-        children.Clear();
-        buttonEvents.Clear();
-    }
+            children.Clear();
+            buttonEvents.Clear();
+        }
 
-    public void Destroy()
-    {
-        Destroy(gameObject);
-    }
+        public void Destroy()
+        {
+            Destroy(gameObject);
+        }
 
-    protected virtual void OnUnload()
-    {
+        protected virtual void OnUnload()
+        {
 
-    }
+        }
 
-    protected virtual void OnLoad()
-    {
+        protected virtual void OnLoad()
+        {
 
+        }
     }
 }

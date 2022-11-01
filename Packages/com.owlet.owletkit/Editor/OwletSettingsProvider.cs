@@ -6,69 +6,71 @@ using UnityEditor;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 using System.IO;
-using Owlet.Asset;
 
-public class OwletSettingsProvider : SettingsProvider
+namespace Owlet
 {
-    private SerializedObject config;
-
-    [SettingsProvider]
-    public static SettingsProvider CreateOwletSettingsProvider()
+    public class OwletSettingsProvider : SettingsProvider
     {
-        var provider = new OwletSettingsProvider("Project/Owlet Settings", SettingsScope.Project);
-        return provider;
-    }
+        private SerializedObject config;
 
-    public OwletSettingsProvider(string path, SettingsScope scopes,
-        IEnumerable<string> keywords = null) : base(path, scopes, keywords)
-    {
-    }
-
-    public override void OnActivate(string searchContext, VisualElement rootElement)
-    {
-        base.OnActivate(searchContext, rootElement);
-    }
-
-    public override void OnGUI(string searchContext)
-    {
-        base.OnGUI(searchContext);
-
-        if(config == null)
+        [SettingsProvider]
+        public static SettingsProvider CreateOwletSettingsProvider()
         {
-            config = GetSerializedSettings();
+            var provider = new OwletSettingsProvider("Project/Owlet Settings", SettingsScope.Project);
+            return provider;
         }
-        if(config == null)
+
+        public OwletSettingsProvider(string path, SettingsScope scopes,
+            IEnumerable<string> keywords = null) : base(path, scopes, keywords)
         {
-            return;
         }
-        EditorGUILayout.PropertyField(config.FindProperty("assetRootPath"), new GUIContent("Asset Root Path"));
-        EditorGUILayout.PropertyField(config.FindProperty("loadType"), new GUIContent("Load Type"));
-        config.ApplyModifiedProperties();
-    }
 
-
-    public static OwletSettings GetOrCreateSettings()
-    {
-        var settings = AssetDatabase.LoadAssetAtPath<OwletSettings>(OwletSettings.DEFAULT_SETTINGS_FILE);
-        if (settings == null)
+        public override void OnActivate(string searchContext, VisualElement rootElement)
         {
-            settings = ScriptableObject.CreateInstance<OwletSettings>();
-            settings.assetRootPath = Path.Combine("Assets", "GameAssets");
-            settings.loadType = AssetLoadType.Local;
+            base.OnActivate(searchContext, rootElement);
+        }
 
-            if (Directory.Exists(OwletSettings.DEFAULT_SETTINGS_PATH) == false)
+        public override void OnGUI(string searchContext)
+        {
+            base.OnGUI(searchContext);
+
+            if (config == null)
             {
-                Directory.CreateDirectory(OwletSettings.DEFAULT_SETTINGS_PATH);
+                config = GetSerializedSettings();
             }
-            AssetDatabase.CreateAsset(settings, OwletSettings.DEFAULT_SETTINGS_FILE);
-            AssetDatabase.SaveAssets();
+            if (config == null)
+            {
+                return;
+            }
+            EditorGUILayout.PropertyField(config.FindProperty("assetRootPath"), new GUIContent("Asset Root Path"));
+            EditorGUILayout.PropertyField(config.FindProperty("loadType"), new GUIContent("Load Type"));
+            config.ApplyModifiedProperties();
         }
 
-        return settings;
-    }
 
-    public static SerializedObject GetSerializedSettings()
-    {
-        return new SerializedObject(GetOrCreateSettings());
+        public static OwletSettings GetOrCreateSettings()
+        {
+            var settings = AssetDatabase.LoadAssetAtPath<OwletSettings>(OwletSettings.DEFAULT_SETTINGS_FILE);
+            if (settings == null)
+            {
+                settings = ScriptableObject.CreateInstance<OwletSettings>();
+                settings.assetRootPath = Path.Combine("Assets", "GameAssets");
+                settings.loadType = AssetLoadType.Local;
+
+                if (Directory.Exists(OwletSettings.DEFAULT_SETTINGS_PATH) == false)
+                {
+                    Directory.CreateDirectory(OwletSettings.DEFAULT_SETTINGS_PATH);
+                }
+                AssetDatabase.CreateAsset(settings, OwletSettings.DEFAULT_SETTINGS_FILE);
+                AssetDatabase.SaveAssets();
+            }
+
+            return settings;
+        }
+
+        public static SerializedObject GetSerializedSettings()
+        {
+            return new SerializedObject(GetOrCreateSettings());
+        }
     }
 }

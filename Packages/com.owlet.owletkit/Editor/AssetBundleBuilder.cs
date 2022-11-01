@@ -6,7 +6,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Owlet.Asset
+namespace Owlet
 {
     public static class AssetBundleBuilder
     {

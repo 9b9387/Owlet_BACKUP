@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Owlet.Asset
+namespace Owlet
 {
     public interface IAssetLoader
     {

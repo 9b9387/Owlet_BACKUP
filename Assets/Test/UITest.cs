@@ -1,8 +1,13 @@
-using Owlet.Asset;
+using Owlet;
 using UnityEngine;
 
 public class UITest : MonoBehaviour
 {
+    private void Start()
+    {
+        TestLoadingView();
+    }
+
     [ContextMenu("TestLoadingView")]
     public void TestLoadingView()
     {

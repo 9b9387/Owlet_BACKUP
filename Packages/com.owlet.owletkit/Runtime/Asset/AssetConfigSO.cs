@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Owlet.Asset
+namespace Owlet
 {
     [CreateAssetMenu(fileName = "AssetConfig", menuName = "Owlet/AssetConfigSO")]
     public class AssetConfigSO : ScriptableObject

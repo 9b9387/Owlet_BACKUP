@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace Owlet.Asset
+namespace Owlet
 {
     public class AssetDatabaseLoader : IAssetLoader
     {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
-using UnityEditor;
+//using UnityEditor;
 using UnityEngine;
 
 public class AssetInfo
@@ -77,7 +77,7 @@ public class AssetManifest
 
 public class Patcher
 {
-    [MenuItem("AssetTest/CheckAssetsVersion")]
+    //[MenuItem("AssetTest/CheckAssetsVersion")]
     public static void CheckAssetsVersion()
     {
         var localManifestPath = Path.Combine(Application.streamingAssetsPath, "asset_v1.bin");
@@ -133,7 +133,7 @@ public class Patcher
         }
     }
 
-    [MenuItem("AssetTest/GenerateAssetManifest")]
+    //[MenuItem("AssetTest/GenerateAssetManifest")]
     public static void GenerateAssetManifest()
     {
         var path = Path.Combine(Application.dataPath, "ResDemo");

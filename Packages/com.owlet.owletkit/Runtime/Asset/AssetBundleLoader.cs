@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace Owlet.Asset
+namespace Owlet
 {
     public class AssetBundleLoader : IAssetLoader
     {
