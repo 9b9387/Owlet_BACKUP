@@ -9,7 +9,7 @@ namespace Owlet
         private readonly Dictionary<string, AssetBundle> m_LoadedAssetBundles = new Dictionary<string, AssetBundle>();
         private AssetBundleManifest m_AssetBundleManifest = null;
         private readonly string assetRootFolder;
-        private static readonly string ManifestName = "GameAssets";
+        private static readonly string ManifestName = "gameassets";
 
         public AssetBundleLoader(string path)
         {

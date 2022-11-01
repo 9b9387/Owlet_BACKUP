@@ -11,7 +11,7 @@ namespace Owlet
     public static class AssetBundleBuilder
     {
         private static readonly string AssetRootDirectory = "GameAssets";
-        private static readonly string ManifestName = "GameAssets";
+        private static readonly string ManifestName = "gameassets";
 
         [MenuItem("AssetTest/BuildStandaloneOSX")]
         public static void BuildStandaloneOSX()
@@ -75,6 +75,8 @@ namespace Owlet
                 var dest = Path.Combine(Application.streamingAssetsPath, file.Name);
                 File.Copy(file.FullName, dest, true);
             }
+
+            AssetDatabase.Refresh();
         }
 
         [MenuItem("AssetTest/AutoBundleName")]

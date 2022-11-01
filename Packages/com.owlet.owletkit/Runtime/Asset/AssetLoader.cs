@@ -12,10 +12,7 @@ namespace Owlet
             config = assetConfigSO;
             var root = config.assetRootPath;
 
-#if !UNITY_EDITOR
-        config.loadType = AssetLoadType.AssetBundle;
-#endif
-
+#if UNITY_EDITOR
             if (config.loadType == AssetLoadType.Local)
             {
                 loaderImp = new AssetDatabaseLoader(root);
@@ -24,6 +21,10 @@ namespace Owlet
             {
                 loaderImp = new AssetBundleLoader(root);
             }
+#else
+            config.loadType = AssetLoadType.AssetBundle;
+            loaderImp = new AssetBundleLoader(root);
+#endif
         }
 
         public static T Load<T>(string path) where T : Object
