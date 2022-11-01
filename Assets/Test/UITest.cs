@@ -18,4 +18,25 @@ public class UITest : MonoBehaviour
 
         UIManager.PushView<UILoadingView>();
     }
+
+
+    [ContextMenu("TestEvent")]
+    public void TestEvent()
+    {
+        EventCenter.UnsubscribeAll();
+
+        EventCenter.Subscribe("test", (p) =>
+        {
+            Debug.Log($"111 {p}");
+        });
+
+        EventCenter.Subscribe("test", (p) =>
+        {
+            Debug.Log($"222 {p}");
+        });
+
+        EventCenter.Trigger("test", 1);
+        EventCenter.Trigger("test", "2");
+        EventCenter.Trigger("test", null);
+    }
 }
