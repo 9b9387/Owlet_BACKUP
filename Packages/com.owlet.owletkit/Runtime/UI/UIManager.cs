@@ -39,7 +39,7 @@ public static class UIManager
         var attribute = attributes[0] as UIAttribute;
         string prefabPath = attribute.PrefabPath;
 
-        //Debug.Log($"UIManager.PushView Instantiate {t.Name} prefab path is {prefabPath}");
+        Debug.Log($"UIManager.PushView Instantiate {t.Name} prefab path is {prefabPath}");
         var obj = AssetLoader.Instantiate(prefabPath);
         if(obj == null)
         {

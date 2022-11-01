@@ -59,6 +59,13 @@ public class WebRequestImpl : MonoBehaviour, IWebRequest
         StartCoroutine(DoUpload(url, data, action));
     }
 
+    /// <summary>
+    /// 上传协程
+    /// </summary>
+    /// <param name="url"></param>
+    /// <param name="data"></param>
+    /// <param name="action"></param>
+    /// <returns></returns>
     private IEnumerator DoUpload(string url, byte[] data, Action<bool> action)
     {
         var request = new UnityWebRequest(url);

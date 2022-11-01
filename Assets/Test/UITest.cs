@@ -11,6 +11,6 @@ public class UITest : MonoBehaviour
         config.loadType = AssetLoadType.Local;
         AssetLoader.Init(config);
 
-        UIManager.PushView<UILoading>();
+        UIManager.PushView<UILoadingView>();
     }
 }
