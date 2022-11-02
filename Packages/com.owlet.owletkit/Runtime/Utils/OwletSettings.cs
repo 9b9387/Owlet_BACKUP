@@ -13,7 +13,5 @@ namespace Owlet
         public static readonly string DEFAULT_SETTINGS_FILE = Path.Combine(DEFAULT_SETTINGS_PATH, "OwletSettings.asset");
 
         public string assetRootPath;
-        public AssetLoadType loadType;
-
     }
 }

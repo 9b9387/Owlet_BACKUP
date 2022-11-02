@@ -29,7 +29,7 @@ namespace Owlet
         {
             base.OnActivate(searchContext, rootElement);
         }
-
+        
         public override void OnGUI(string searchContext)
         {
             base.OnGUI(searchContext);
@@ -55,7 +55,6 @@ namespace Owlet
             {
                 settings = ScriptableObject.CreateInstance<OwletSettings>();
                 settings.assetRootPath = Path.Combine("Assets", "GameAssets");
-                settings.loadType = AssetLoadType.Local;
 
                 if (Directory.Exists(OwletSettings.DEFAULT_SETTINGS_PATH) == false)
                 {

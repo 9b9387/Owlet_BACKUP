@@ -95,9 +95,6 @@ namespace Owlet
         private void OnDestroy()
         {
             OnUnload();
-
-            children.Clear();
-            buttonEvents.Clear();
         }
 
         public void Destroy()

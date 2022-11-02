@@ -32,8 +32,7 @@ public static class WebRequest
     {
         if(impl == null)
         {
-            Debug.LogWarning("WebRequest has not been initialized");
-            return;
+            throw new Exception("WebRequest has not been initialized");
         }
 
         impl.Get(url, headers, action, timeout);
@@ -44,8 +43,7 @@ public static class WebRequest
     {
         if(impl == null)
         {
-            Debug.LogWarning("WebRequest has not been initialized");
-            return;
+            throw new Exception("WebRequest has not been initialized");
         }
 
         impl.Post(url, headers, postData, action, timeout);
@@ -56,8 +54,7 @@ public static class WebRequest
     {
         if (impl == null)
         {
-            Debug.LogWarning("WebRequest has not been initialized");
-            return;
+            throw new Exception("WebRequest has not been initialized");
         }
 
         impl.Download(url, filePath, action);
@@ -67,8 +64,7 @@ public static class WebRequest
     {
         if (impl == null)
         {
-            Debug.LogWarning("WebRequest has not been initialized");
-            return;
+            throw new Exception("WebRequest has not been initialized");
         }
 
         impl.Upload(url, data, action);

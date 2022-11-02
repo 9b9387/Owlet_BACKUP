@@ -8,16 +8,22 @@ namespace Owlet
     {
         private readonly Dictionary<string, AssetBundle> m_LoadedAssetBundles = new Dictionary<string, AssetBundle>();
         private AssetBundleManifest m_AssetBundleManifest = null;
-        private readonly string assetRootFolder;
+        private string rootPath;
         private static readonly string ManifestName = "gameassets";
 
-        public AssetBundleLoader(string path)
+        public void SetAssetRootPath(string path)
         {
-            assetRootFolder = path;
+            rootPath = path;
         }
 
         public string GetAssetBundlePath(string assetBundleName)
         {
+            var persistentPath = Path.Combine(Application.persistentDataPath, assetBundleName);
+            if(File.Exists(persistentPath))
+            {
+                return persistentPath;
+            }
+
             return Path.Combine(Application.streamingAssetsPath, assetBundleName);
         }
 
@@ -29,7 +35,7 @@ namespace Owlet
         /// <returns></returns>
         public T Load<T>(string assetPath) where T : Object
         {
-            var path = Path.Combine(assetRootFolder, assetPath);
+            var path = Path.Combine(rootPath, assetPath);
 
             var assetBundleName = GetAssetBundleName(path);
             if (string.IsNullOrEmpty(assetBundleName))
@@ -55,7 +61,7 @@ namespace Owlet
         /// <returns></returns>
         private string GetAssetBundleName(string path)
         {
-            var relpath = path.Replace(assetRootFolder, "");
+            var relpath = path.Replace(rootPath, "");
             if(relpath.StartsWith("/"))
             {
                 relpath = relpath.Substring(1, relpath.Length - 1);

@@ -4,39 +4,38 @@ namespace Owlet
 {
     public static class AssetLoader
     {
-        public static AssetConfigSO config;
-        public static IAssetLoader loaderImp;
+        public static IAssetLoader loaderImpl;
 
-        public static void Init(AssetConfigSO assetConfigSO)
+        public static void Init<T>(string assetRootPath) where T : MonoBehaviour, IAssetLoader
         {
-            config = assetConfigSO;
-            var root = config.assetRootPath;
+            T impl = Object.FindObjectOfType<T>();
 
-#if UNITY_EDITOR
-            if (config.loadType == AssetLoadType.Local)
+            if (impl == null)
             {
-                loaderImp = new AssetDatabaseLoader(root);
+                var obj = new GameObject("AssetLoader");
+                impl = obj.AddComponent<T>();
+                impl.SetAssetRootPath(assetRootPath);
             }
-            else if (config.loadType == AssetLoadType.AssetBundle)
-            {
-                loaderImp = new AssetBundleLoader(root);
-            }
-#else
-            config.loadType = AssetLoadType.AssetBundle;
-            loaderImp = new AssetBundleLoader(root);
-#endif
+            Object.DontDestroyOnLoad(impl.gameObject);
+
+            loaderImpl = impl;
         }
 
         public static T Load<T>(string path) where T : Object
         {
-            return loaderImp.Load<T>(path);
+            if(loaderImpl == null)
+            {
+                throw new System.Exception("AssetLoader has not been initialized");
+            }
+            
+            return loaderImpl.Load<T>(path);
         }
 
         public static GameObject Instantiate(string path)
         {
-            if(loaderImp == null)
+            if(loaderImpl == null)
             {
-                return null;
+                throw new System.Exception("AssetLoader has not been initialized");
             }
 
             var prefab = Load<GameObject>(path);
@@ -49,11 +48,5 @@ namespace Owlet
             obj.name = obj.name.Replace("(Clone)", "");
             return obj;
         }
-    }
-
-    public enum AssetLoadType
-    {
-        Local,
-        AssetBundle
     }
 }

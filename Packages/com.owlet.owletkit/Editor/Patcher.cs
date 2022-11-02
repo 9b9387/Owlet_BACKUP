@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
-//using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 
 namespace Owlet
@@ -65,7 +65,7 @@ namespace Owlet
             }
         }
 
-        //[MenuItem("AssetTest/GenerateAssetManifest")]
+        [MenuItem("AssetTest/GenerateAssetManifest")]
         public static void GenerateAssetManifest()
         {
             var path = Path.Combine(Application.dataPath, "ResDemo");
@@ -78,7 +78,8 @@ namespace Owlet
             {
                 var am = new AssetInfo();
                 var file = files[i];
-                if (file.EndsWith(".meta"))
+                
+                if (file.EndsWith(".meta") || file.StartsWith("."))
                 {
                     continue;
                 }

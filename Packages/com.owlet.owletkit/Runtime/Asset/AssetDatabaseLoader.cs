@@ -5,18 +5,18 @@ using UnityEditor;
 
 namespace Owlet
 {
-    public class AssetDatabaseLoader : IAssetLoader
+    public class AssetDatabaseLoader : MonoBehaviour, IAssetLoader
     {
-        private readonly string assetRootFolder;
+        private string rootPath;
 
-        public AssetDatabaseLoader(string rootPath)
+        public void SetAssetRootPath(string path)
         {
-            assetRootFolder = rootPath;
+            rootPath = path;
         }
 
         public T Load<T>(string assetPath) where T : Object
         {
-            var path = Path.Combine(assetRootFolder, assetPath);
+            var path = Path.Combine(rootPath, assetPath);
             return AssetDatabase.LoadAssetAtPath<T>(path);
         }
     }

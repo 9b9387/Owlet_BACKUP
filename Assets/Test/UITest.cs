@@ -1,5 +1,7 @@
+using System;
 using Owlet;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class UITest : MonoBehaviour
 {
@@ -11,32 +13,38 @@ public class UITest : MonoBehaviour
     [ContextMenu("TestLoadingView")]
     public void TestLoadingView()
     {
-        var config = ScriptableObject.CreateInstance<AssetConfigSO>();
-        config.assetRootPath = "Assets/GameAssets";
-        config.loadType = AssetLoadType.Local;
-        AssetLoader.Init(config);
+        AssetLoader.Init<AssetDatabaseLoader>("Assets/GameAssets");
 
         UIManager.PushView<UILoadingView>();
     }
-
 
     [ContextMenu("TestEvent")]
     public void TestEvent()
     {
         EventCenter.UnsubscribeAll();
 
-        EventCenter.Subscribe("test", (p) =>
+        UnityAction<object> l = p =>
         {
             Debug.Log($"111 {p}");
-        });
+        };
 
-        EventCenter.Subscribe("test", (p) =>
+        EventCenter.Subscribe(1, l);
+
+        EventCenter.Subscribe(2, (p) =>
         {
             Debug.Log($"222 {p}");
         });
 
-        EventCenter.Trigger("test", 1);
-        EventCenter.Trigger("test", "2");
-        EventCenter.Trigger("test", null);
+        EventCenter.Trigger(1, 1);
+        EventCenter.Trigger(2, "2");
+        EventCenter.Trigger(1, null);
+
+        EventCenter.Unsubscribe(1, l);
+        EventCenter.Trigger(1, 1);
+
+        EventCenter.UnsubscribeAll();
+        EventCenter.Trigger(1);
+        EventCenter.Trigger(2);
+
     }
 }
