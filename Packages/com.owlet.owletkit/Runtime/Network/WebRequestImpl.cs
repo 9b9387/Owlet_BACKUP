@@ -31,9 +31,9 @@ namespace Owlet
         /// <param name="filePath"></param>
         /// <param name="action"></param>
         public void Download(string url, string filePath,
-            Action<UnityWebRequest> action)
+            Action<UnityWebRequest> action, Action<UnityWebRequest> progressCallback)
         {
-            StartCoroutine(DoDownload(url, filePath, action));
+            StartCoroutine(DoDownload(url, filePath, action, progressCallback));
         }
 
         /// <summary>
@@ -139,19 +139,26 @@ namespace Owlet
         }
 
         private IEnumerator DoDownload(string url, string filePath,
-            Action<UnityWebRequest> action)
+            Action<UnityWebRequest> completeCallback, Action<UnityWebRequest> progressCallback)
         {
+            Debug.Log(filePath);
             var request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbGET);
             request.downloadHandler = new DownloadHandlerFile(filePath);
+            request.SendWebRequest();
 
-            yield return request.SendWebRequest();
+            while(request.isDone == false)
+            {
+                progressCallback?.Invoke(request);
+                yield return null;
+            }
 
             if (request.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogWarning($"WebRequest.GetFile {url} error. {request.result}:{request.error}");
             }
 
-            action?.Invoke(request);
+            progressCallback?.Invoke(request);
+            completeCallback?.Invoke(request);
             request.Dispose();
         }
     }

@@ -55,14 +55,14 @@ public static class WebRequest
     }
 
     public static void Download(string url, string filePath,
-        Action<UnityWebRequest> action)
+        Action<UnityWebRequest> action = null, Action<UnityWebRequest> progressCallback = null)
     {
         if (impl == null)
         {
             throw new Exception("WebRequest has not been initialized");
         }
 
-        impl.Download(url, filePath, action);
+        impl.Download(url, filePath, action, progressCallback);
     }
 
     public static void Upload(string url, byte[] data, Action<bool> action)

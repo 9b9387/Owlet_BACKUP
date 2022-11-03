@@ -53,5 +53,15 @@ namespace Owlet
             obj.name = obj.name.Replace("(Clone)", "");
             return obj;
         }
+
+        public static void UnloadAll(bool unloadAllLoadedObjects)
+        {
+            if (loaderImpl == null)
+            {
+                throw new System.Exception("AssetLoader has not been initialized");
+            }
+
+            loaderImpl.UnloadAll(unloadAllLoadedObjects);
+        }
     }
 }

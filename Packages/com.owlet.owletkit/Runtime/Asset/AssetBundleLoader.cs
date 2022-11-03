@@ -164,5 +164,14 @@ namespace Owlet
             AssetBundle single = AssetBundle.LoadFromFile(manifestPath);
             return single.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
         }
+
+        public void UnloadAll(bool unloadAllLoadedObjects)
+        {
+            foreach (var item in m_LoadedAssetBundles.Values)
+            {
+                item.Unload(unloadAllLoadedObjects);
+            }
+            m_LoadedAssetBundles.Clear();
+        }
     }
 }

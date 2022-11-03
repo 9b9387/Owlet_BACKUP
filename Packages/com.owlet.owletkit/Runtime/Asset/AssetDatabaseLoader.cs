@@ -19,6 +19,10 @@ namespace Owlet
             var path = Path.Combine(rootPath, assetPath);
             return AssetDatabase.LoadAssetAtPath<T>(path);
         }
+
+        public void UnloadAll(bool unloadAllLoadedObjects)
+        {
+        }
     }
 }
 #endif

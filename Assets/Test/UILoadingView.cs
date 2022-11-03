@@ -1,22 +1,25 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Owlet;
 using LitJson;
 using System.IO;
+using System.Collections.Generic;
 
 [UI(PrefabPath="UI/Loading/UILoadingView.prefab")]
 public class UILoadingView : UIBaseView
 {
 	private Slider slider;
-	private bool isStart;
+	private float progress;
+	private float begin_progress;
+	private float timer = 0;
 
 	protected override void OnLoad()
 	{
 		WebRequest.Init<WebRequestImpl>();
 
 		slider = FindComponent<Slider>("ProgressBar");
-		slider.value = 0;
+		progress = 0;
+		slider.value = progress;
 	}
 
 	protected override void OnUnload()
@@ -33,68 +36,86 @@ public class UILoadingView : UIBaseView
 			Debug.Log(res.downloadHandler.text);
 
 			var jsonData = JsonMapper.ToObject(res.downloadHandler.text);
-			var url = jsonData["url"];
+			var code = int.Parse(jsonData["code"].ToString());
+			if(code == 0)
+            {
+				Debug.Log("up to data");
+				progress = 1;
+				return;
+            }
+			var url = jsonData["url"].ToString();
 			var manifest = jsonData["manifest"];
 
 			var dl = $"{url}/{manifest}";
 
 			var path = Path.Combine(Application.persistentDataPath, manifest.ToString());
-			Debug.Log(path);
+			if(Directory.Exists(Application.persistentDataPath) == false)
+            {
+				Directory.CreateDirectory(Application.persistentDataPath);
+            }
+			//Debug.Log(path);
 			WebRequest.Download(dl, path, (r) => {
 				var bytes = File.ReadAllBytes(path);
-				var m_data = new AssetManifest(bytes);
-				Debug.Log($"size:{m_data.size}");
-				for (int i = 0; i < m_data.list.Count; i++)
-				{
-					var assetInfo = m_data.list[i];
-					var needUpdate = false; 
-                    for (int j = 0; j < local_manifest.list.Count; j++)
-                    {
-						var local_asset_info = local_manifest.list[j];
-						if(assetInfo.name == local_asset_info.name)
-                        {
-							if (assetInfo.time > local_asset_info.time && assetInfo.md5 != local_asset_info.md5)
-                            {
-								needUpdate = true;
-							}
-							break;
-                        }
+				var remote_manifest = new AssetManifest(bytes);
 
-						needUpdate = true;
-                    }
+				var filterInfos = Patcher.FilterUpdateAssetInfo(local_manifest, remote_manifest);
 
-					if(needUpdate == false)
-                    {
-						continue;
-                    }
-					var u = $"{url}/{assetInfo.name}";
-					var p = Path.Combine(Application.persistentDataPath, assetInfo.name);
-					Debug.Log($"start download {u} to {p}...");
-
-					WebRequest.Download(u, p, (re) => {
-						Debug.Log($"finish download {p}");
-					});
+				long totol_download_size = 0;
+                for (int i = 0; i < filterInfos.Count; i++)
+                {
+					var info = filterInfos[i];
+					totol_download_size += info.size;
 				}
-			});
+
+				DownloadAsset(url, Application.persistentDataPath, filterInfos, 0, totol_download_size, 0);
+
+			}, null);
 		});
+	}
+
+	private void DownloadAsset(string url, string dest, List<AssetInfo> list, int index, long totalSize, long downloadedSize)
+    {
+		if(index >= list.Count)
+        {
+			return;
+        }
+
+		var info = list[index];
+		var download_url = $"{url}/{info.name}";
+		var download_path = Path.Combine(dest, info.name);
+
+		WebRequest.Download(download_url, download_path,
+			(re) => {
+				Debug.Log($"finish download {dest}");
+				downloadedSize += (long)re.downloadedBytes;
+                index++;
+				DownloadAsset(url, dest, list, index, totalSize, downloadedSize);
+			},
+			(req) => {
+                long current_download_size = (long)req.downloadedBytes + downloadedSize;
+                progress = current_download_size / (float)totalSize;
+				begin_progress = slider.value;
+				timer = 0;
+			});
 	}
 
 	public void OnClick_ResetButton()
 	{
-		isStart = false;
 		slider.value = 0;
 	}
 
 	public void OnClick_TestButton()
 	{
+		AssetLoader.UnloadAll(false);
 		UIManager.PushView<UITestView>();
     }
 
 	private void Update()
 	{
-		if (isStart && slider.value < 1)
+		if(progress > slider.value && slider.value <= 1)
         {
-			slider.value += Time.deltaTime * 0.5f;
+			timer += Time.deltaTime;
+			slider.value = Mathf.Lerp(begin_progress, progress, timer);
         }
     }
 }

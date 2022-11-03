@@ -14,7 +14,8 @@ public interface IWebRequest
     public void Post(string url, Dictionary<string, string> headers,
         WWWForm postData, Action<UnityWebRequest> action, int timeout);
 
-    public void Download(string url, string filePath, Action<UnityWebRequest> action);
+    public void Download(string url, string filePath,
+        Action<UnityWebRequest> action, Action<UnityWebRequest> progressCallback);
 
     public void Upload(string url, byte[] data, Action<bool> action);
 }
