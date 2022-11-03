@@ -16,6 +16,11 @@ public static class WebRequest
     /// <typeparam name="T">IWebRequest的实现类型</typeparam>
     public static void Init<T>() where T : MonoBehaviour, IWebRequest
     {
+        if (impl != null)
+        {
+            Debug.LogWarning("WebRequest has initialized");
+            return;
+        }
         T webRequestImpl = UnityEngine.Object.FindObjectOfType<T>();
         if(webRequestImpl == null)
         {

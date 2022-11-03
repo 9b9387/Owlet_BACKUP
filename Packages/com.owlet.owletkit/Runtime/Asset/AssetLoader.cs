@@ -8,6 +8,11 @@ namespace Owlet
 
         public static void Init<T>(string assetRootPath) where T : MonoBehaviour, IAssetLoader
         {
+            if(loaderImpl != null)
+            {
+                Debug.LogWarning("AssetLoader has initialized");
+                return;
+            }
             T impl = Object.FindObjectOfType<T>();
 
             if (impl == null)

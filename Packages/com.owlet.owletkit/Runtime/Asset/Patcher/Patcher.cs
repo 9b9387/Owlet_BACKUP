@@ -9,6 +9,31 @@ namespace Owlet
 {
     public class Patcher
     {
+        public static AssetManifest LoadLocalAssetManifest()
+        {
+            var localManifestPath = Path.Combine(Application.persistentDataPath, "asset.bin");
+            if(File.Exists(localManifestPath) == false)
+            {
+                localManifestPath = Path.Combine(Application.streamingAssetsPath, "asset.bin");
+            }
+
+            if(File.Exists(localManifestPath) == false)
+            {
+                Debug.LogWarning($"Can not load local version file at:{localManifestPath}");
+                return null;
+            }
+            Debug.Log(localManifestPath);
+
+            var file = File.Open(localManifestPath, FileMode.Open);
+            var data1 = new byte[file.Length];
+            file.Read(data1, 0, (int)file.Length);
+            var manifest = new AssetManifest(data1);
+            file.Close();
+            file.Dispose();
+
+            return manifest;
+        }
+
         //[MenuItem("AssetTest/CheckAssetsVersion")]
         public static void CheckAssetsVersion()
         {
@@ -62,58 +87,6 @@ namespace Owlet
                     Debug.Log($"{info2.name} 新增资源");
                     updateAssetList.Add(info2);
                 }
-            }
-        }
-
-        [MenuItem("AssetTest/GenerateAssetManifest")]
-        public static void GenerateAssetManifest()
-        {
-            var path = Path.Combine(Application.dataPath, "ResDemo");
-            Debug.Log(path);
-            var files = Directory.GetFiles(path, "*", SearchOption.TopDirectoryOnly);
-            var manifest = new AssetManifest();
-            manifest.time = DateTime.Now.Ticks;
-
-            for (int i = 0; i < files.Length; i++)
-            {
-                var am = new AssetInfo();
-                var file = files[i];
-                
-                if (file.EndsWith(".meta") || file.StartsWith("."))
-                {
-                    continue;
-                }
-
-                var fileInfo = new FileInfo(file);
-                am.size = fileInfo.Length;
-                am.time = fileInfo.LastWriteTime.Ticks;
-                am.name = fileInfo.Name;
-                using (var fs = File.Open(file, FileMode.Open))
-                {
-                    var md5 = MD5.Create();
-                    var fileMD5Bytes = md5.ComputeHash(fs);
-                    am.md5 = BitConverter.ToString(fileMD5Bytes).Replace("-", "").ToLower();
-                }
-                Debug.Log(am.ToString());
-                manifest.list.Add(am);
-            }
-
-            var f = File.Create(Path.Combine(Application.streamingAssetsPath, "asset.bin"));
-            var bytes = manifest.ToBytes();
-            f.Write(bytes, 0, bytes.Length);
-            f.Close();
-            f.Dispose();
-
-            f = File.Open(Path.Combine(Application.streamingAssetsPath, "asset.bin"), FileMode.Open);
-            var data = new byte[f.Length];
-            f.Read(data, 0, (int)f.Length);
-            var m = new AssetManifest(data);
-            f.Close();
-            f.Dispose();
-
-            for (int i = 0; i < m.list.Count; i++)
-            {
-                Debug.Log(m.list[i].ToString());
             }
         }
     }

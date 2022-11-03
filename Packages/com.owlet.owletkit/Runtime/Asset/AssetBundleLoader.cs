@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Owlet
 {
-    public class AssetBundleLoader : IAssetLoader
+    public class AssetBundleLoader : MonoBehaviour, IAssetLoader
     {
         private readonly Dictionary<string, AssetBundle> m_LoadedAssetBundles = new Dictionary<string, AssetBundle>();
         private AssetBundleManifest m_AssetBundleManifest = null;

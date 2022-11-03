@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
+using System;
+using System.Security.Cryptography;
 
 namespace Owlet
 {
@@ -17,6 +19,68 @@ namespace Owlet
         public static void BuildStandaloneOSX()
         {
             Build(BuildTarget.StandaloneOSX);
+        }
+
+        [MenuItem("AssetTest/DeleteAssetsCache")]
+        public static void DeleteAssetsCache()
+        {
+            Directory.Delete(Application.persistentDataPath, true);
+        }
+
+
+        public static void GenerateAssetManifest(BuildTarget buildTarget)
+        {
+            string path = Path.Combine(Application.dataPath, $"../AssetBundle/{buildTarget}/");
+
+            Debug.Log("GenerateAssetManifest:" + path);
+            var files = Directory.GetFiles(path, "*", SearchOption.TopDirectoryOnly);
+            var manifest = new AssetManifest
+            {
+                time = DateTime.Now.Ticks
+            };
+
+            for (int i = 0; i < files.Length; i++)
+            {
+                var am = new AssetInfo();
+                var file = files[i];
+
+                if (file.EndsWith(".meta") || file.StartsWith("."))
+                {
+                    continue;
+                }
+
+                var fileInfo = new FileInfo(file);
+                am.size = fileInfo.Length;
+                am.time = fileInfo.LastWriteTime.Ticks;
+                am.name = fileInfo.Name;
+                using (var fs = File.Open(file, FileMode.Open))
+                {
+                    var md5 = MD5.Create();
+                    var fileMD5Bytes = md5.ComputeHash(fs);
+                    am.md5 = BitConverter.ToString(fileMD5Bytes).Replace("-", "").ToLower();
+                }
+                Debug.Log(am.ToString());
+                manifest.list.Add(am);
+
+                manifest.size += am.size;
+            }
+            var f = File.Create(Path.Combine(path, "asset.bin"));
+            var bytes = manifest.ToBytes();
+            f.Write(bytes, 0, bytes.Length);
+            f.Close();
+            f.Dispose();
+
+            //f = File.Open(Path.Combine(Application.streamingAssetsPath, "asset.bin"), FileMode.Open);
+            //var data = new byte[f.Length];
+            //f.Read(data, 0, (int)f.Length);
+            //var m = new AssetManifest(data);
+            //f.Close();
+            //f.Dispose();
+
+            //for (int i = 0; i < m.list.Count; i++)
+            //{
+            //    Debug.Log(m.list[i].ToString());
+            //}
         }
 
         private static void RenameManifest(BuildTarget buildTarget, string newName)
@@ -60,6 +124,8 @@ namespace Owlet
             }
 
             RenameManifest(buildTarget, ManifestName);
+
+            GenerateAssetManifest(buildTarget);
 
             var assetbundlePath = new DirectoryInfo(outpath);
             var allfiles = assetbundlePath.GetFiles("*.*", SearchOption.AllDirectories);

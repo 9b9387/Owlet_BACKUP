@@ -10,6 +10,7 @@ namespace Owlet
     public class AssetManifest
     {
         public long time;
+        public long size;
         public List<AssetInfo> list = new List<AssetInfo>();
 
         public AssetManifest()
@@ -26,6 +27,7 @@ namespace Owlet
             var s = new MemoryStream();
             var writer = new BinaryWriter(s);
             writer.Write(time);
+            writer.Write(size);
             writer.Write(list.Count);
             for (int i = 0; i < list.Count; i++)
             {
@@ -49,6 +51,7 @@ namespace Owlet
             var s = new MemoryStream(data);
             var reader = new BinaryReader(s);
             time = reader.ReadInt64();
+            size = reader.ReadInt64();
             var count = reader.ReadInt32();
 
             for (int i = 0; i < count; i++)

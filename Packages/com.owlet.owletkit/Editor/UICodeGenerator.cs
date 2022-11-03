@@ -60,6 +60,7 @@ namespace Owlet
             var class_name = fi.Name.Split('.')[0];
 
             sb.Append("using System;\n");
+            sb.Append("using Owlet;\n");
             sb.Append("using UnityEngine;\n\n");
 
             var res_path = fi.FullName.Replace("\\", "/");

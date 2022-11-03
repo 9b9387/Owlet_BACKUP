@@ -13,7 +13,7 @@ public class UITest : MonoBehaviour
     [ContextMenu("TestLoadingView")]
     public void TestLoadingView()
     {
-        AssetLoader.Init<AssetDatabaseLoader>("Assets/GameAssets");
+        AssetLoader.Init<AssetBundleLoader>("Assets/GameAssets");
 
         UIManager.PushView<UILoadingView>();
     }
