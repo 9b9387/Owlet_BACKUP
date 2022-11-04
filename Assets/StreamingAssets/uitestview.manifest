@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2940855214
+CRC: 2870447877
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: dc5e860ad03c270d071ed68f2f964f1f
+    Hash: b0fd7b18d122fa852b53c638b7f278de
   TypeTreeHash:
     serializedVersion: 2
-    Hash: ddbd73f0b765d6368ebe1fdf8816e2c3
+    Hash: 8e0497bed77131c3d0d4dad2384e0d9b
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -20,11 +20,11 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 128
@@ -58,13 +58,13 @@ SerializeReferenceClassIdentifiers:
   ClassName: TMPro.VertexGradient
 - AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.Events.PersistentCallGroup
-- AssemblyName: UnityEngine.TextCoreFontEngineModule
+- AssemblyName: UnityEngine.TextCoreModule
   ClassName: UnityEngine.TextCore.FaceInfo
-- AssemblyName: UnityEngine.TextCoreFontEngineModule
+- AssemblyName: UnityEngine.TextCoreModule
   ClassName: UnityEngine.TextCore.Glyph
-- AssemblyName: UnityEngine.TextCoreFontEngineModule
+- AssemblyName: UnityEngine.TextCoreModule
   ClassName: UnityEngine.TextCore.GlyphMetrics
-- AssemblyName: UnityEngine.TextCoreFontEngineModule
+- AssemblyName: UnityEngine.TextCoreModule
   ClassName: UnityEngine.TextCore.GlyphRect
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.AnimationTriggers

@@ -9,7 +9,7 @@ namespace Owlet
 {
     public static class EventCenter
     {
-        private static readonly Dictionary<int, UnityEvent<object>> events = new();
+        private static readonly Dictionary<int, UnityEvent<object>> events = new Dictionary<int, UnityEvent<object>>();
 
         public static void Subscribe(int eventID, UnityAction<object> action)
         {
