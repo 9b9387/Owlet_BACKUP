@@ -71,7 +71,7 @@ public class HybridCLRBuild
             }
             string dllBytesPath = $"{aotAssembliesDstDir}/{dll}.bytes";
             File.Copy(srcDllPath, dllBytesPath, true);
-            Debug.Log($"[CopyAOTAssembliesToStreamingAssets] copy AOT dll {srcDllPath} -> {dllBytesPath}");
+            Debug.Log($"[CopyAOTAssembliesToGameAssets] copy AOT dll {srcDllPath} -> {dllBytesPath}");
         }
     }
 
@@ -87,7 +87,7 @@ public class HybridCLRBuild
             string dllPath = $"{hotfixDllSrcDir}/{dll}";
             string dllBytesPath = $"{hotfixAssembliesDstDir}/{dll}.bytes";
             File.Copy(dllPath, dllBytesPath, true);
-            Debug.Log($"[CopyHotUpdateAssembliesToStreamingAssets] copy hotfix dll {dllPath} -> {dllBytesPath}");
+            Debug.Log($"[CopyHotUpdateAssembliesToGameAssets] copy hotfix dll {dllPath} -> {dllBytesPath}");
         }
     }
 }
