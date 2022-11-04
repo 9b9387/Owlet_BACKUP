@@ -14,13 +14,13 @@ namespace Owlet
             {
                 localManifestPath = Path.Combine(Application.streamingAssetsPath, "asset.bin");
             }
+            Debug.Log(localManifestPath);
 
-            if(File.Exists(localManifestPath) == false)
+            if (File.Exists(localManifestPath) == false)
             {
                 Debug.LogWarning($"Can not load local version file at:{localManifestPath}");
                 return null;
             }
-            Debug.Log(localManifestPath);
 
             var file = File.Open(localManifestPath, FileMode.Open);
             var data1 = new byte[file.Length];
