@@ -46,9 +46,11 @@ namespace Owlet
             AssetBundle asset = GetAssetBundle(assetBundleName, assetBundlePath);
             if (asset == null)
             {
+                Debug.LogWarning($"asset is null {assetBundlePath}");
                 return null;
             }
-            T ret = asset.LoadAsset<T>(path);
+
+            T ret = asset.LoadAsset<T>(path.ToLower());
 
             return ret;
         }

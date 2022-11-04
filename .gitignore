@@ -8,3 +8,5 @@ obj
 *.csproj
 Logs
 AssetBundle
+HybridCLRData
+Release-StandaloneOSX

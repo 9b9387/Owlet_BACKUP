@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 4223237826
+CRC: 1688332599
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -7,4 +7,10 @@ AssetBundleManifest:
       Dependencies: {}
     Info_1:
       Name: ui
+      Dependencies: {}
+    Info_2:
+      Name: assemblies
+      Dependencies: {}
+    Info_3:
+      Name: gameapp
       Dependencies: {}

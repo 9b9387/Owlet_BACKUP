@@ -1,0 +1,23 @@
+ManifestFileVersion: 0
+CRC: 2470778233
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 34200497b3e9c6bf62e1784ea9f7ee6d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 2d9522a8bcf1a9ace53e8e7e5b86aa47
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: b87b0bbf4be3b417691a1bab76853bd4, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/GameAssets/GameApp/GameApp.prefab
+Dependencies: []

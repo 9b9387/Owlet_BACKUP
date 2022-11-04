@@ -16,4 +16,9 @@ public class UITestView : UIBaseView
 	{
 		Destroy();
 	}
+
+	public void OnClick_HiButton()
+	{
+		Debug.Log("Remote Asset");
+	}
 }

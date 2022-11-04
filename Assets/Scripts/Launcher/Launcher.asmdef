@@ -1,0 +1,17 @@
+{
+    "name": "Launcher",
+    "rootNamespace": "",
+    "references": [
+        "HybridCLR.Runtime",
+        "Owletkit"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

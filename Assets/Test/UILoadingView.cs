@@ -4,6 +4,7 @@ using Owlet;
 using LitJson;
 using System.IO;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 [UI(PrefabPath="UI/Loading/UILoadingView.prefab")]
 public class UILoadingView : UIBaseView
@@ -101,8 +102,17 @@ public class UILoadingView : UIBaseView
 
 	public void OnClick_ResetButton()
 	{
-		slider.value = 0;
-	}
+		AssetLoader.UnloadAll(false);
+        //LoadMetadataForAOTAssemblies();
+
+        Debug.Log(Application.persistentDataPath);
+        byte[] dllBytes = AssetLoader.Load<TextAsset>("Assemblies/Assembly-CSharp.dll.bytes").bytes;
+        System.Reflection.Assembly.Load(dllBytes);
+
+        var obj = GameObject.Find("GameApp");
+        DestroyImmediate(obj);
+        AssetLoader.Instantiate("GameApp/GameApp.prefab");
+    }
 
 	public void OnClick_TestButton()
 	{
